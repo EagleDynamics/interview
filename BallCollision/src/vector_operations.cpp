@@ -14,3 +14,8 @@ double vector_product(const Vector2d &vec_1,
                      const Vector2d &vec_2) {
   return vec_1.x * vec_2.y - vec_1.y * vec_2.x;
 }
+
+std::ostream &operator<<(std::ostream &os, const Vector2d &obj) {
+  os << "(" << obj.x << ", " << obj.y << ")";
+  return os;
+}

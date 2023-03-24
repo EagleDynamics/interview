@@ -42,19 +42,27 @@ class Ball {
                       double radius,
                       double velocity,
                       bool is_collided);
+  void set_center(const Vector2d& center);
   void set_collided(bool state);
   void draw(sf::RenderWindow &window) const;
-  void get_info() const;
 
   void move(double deltaTime) {
     center_.x += direction_.x * velocity_ * deltaTime;
     center_.y += direction_.y * velocity_ * deltaTime;
-    if (center_.x + radius_ >= WINDOW_X ||
-        center_.x - radius_ <= 0) {
+    if (center_.x + radius_ >= WINDOW_X) {
+      center_.x = WINDOW_X - radius_;
       direction_.x *= -1;
     }
-    if (center_.y + radius_ >= WINDOW_Y ||
-        center_.y - radius_ <= 0) {
+    if (center_.x - radius_ <= 0) {
+      center_.x = radius_;
+      direction_.x *= -1;
+    }
+    if (center_.y + radius_ >= WINDOW_Y) {
+      center_.y = WINDOW_Y - radius_;
+      direction_.y *= -1;
+    }
+    if (center_.y - radius_ <= 0) {
+      center_.y = radius_;
       direction_.y *= -1;
     }
   }
@@ -65,9 +73,9 @@ class Ball {
   bool operator==(const Ball &other) const;
   bool operator!=(const Ball &other) const;
 
-  friend void collide(Ball &ball_1, Ball &ball_2, double deltaTime);
+  friend void collide(Ball &ball_1, Ball &ball_2);
 };
 
-void collide(Ball &ball_1, Ball &ball_2, double deltaTime);
+void collide(Ball &ball_1, Ball &ball_2);
 
 #endif //INTERVIEW_BALLCOLLISION_BALL_H_

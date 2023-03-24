@@ -4,7 +4,7 @@ namespace Math
 {
 
     template<typename T, unsigned size>
-    class MiddleAverageFilter
+    class middle_average_filter
     {
         T data[size] = {};
         unsigned id = 0u;

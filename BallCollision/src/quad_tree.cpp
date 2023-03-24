@@ -1,4 +1,4 @@
-#include "base_quad_tree.h"
+#include "quad_tree.h"
 
 bool base_quad_tree::AABB::contains(const Ball &ball) const {
   auto ball_center = ball.get_center();
@@ -211,4 +211,16 @@ void StackQuadTree::Node::query(const base_quad_tree *qt_ptr,
   }
 }
 
-// TODO: update
+void StackQuadTree::update(const std::vector<Ball> &balls) {
+  // TODO: We can optimize it using additional field to maintain
+  // index of last used node. Hence, we won't have to clear vector
+  // each iteration.
+  nodes_.resize(0);
+  nodes_.emplace_back(root_->boundary);
+  balls_ = balls;
+  root_ = std::make_unique<Node>(root_->boundary);
+  uint32_t balls_count = balls.size();
+  for (uint32_t i = 0; i < balls_count; ++i) {
+    root_->insert(this, i);
+  }
+}

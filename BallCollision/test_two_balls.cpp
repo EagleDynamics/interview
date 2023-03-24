@@ -1,10 +1,10 @@
 #include <chrono>
 #include <random>
 #include "SFML/Graphics.hpp"
-#include "lib/MiddleAverageFilter.h"
+#include "lib/middle_average_filter.h"
 #include "lib/Ball.h"
-#include "base_quad_tree.h"
-Math::MiddleAverageFilter<double, 100> fpscounter;
+#include "quad_tree.h"
+Math::middle_average_filter<double, 100> fpscounter;
 
 void draw_fps(sf::RenderWindow &window, double fps) {
   char c[32];
@@ -14,9 +14,9 @@ void draw_fps(sf::RenderWindow &window, double fps) {
   window.setTitle(str);
 }
 
-double get_system_energy(const std::vector<Ball>& balls) {
+double get_system_energy(const std::vector<Ball> &balls) {
   double ENERGY = 0;
-  for (auto& ball: balls) {
+  for (auto &ball : balls) {
     ENERGY += ball.get_velocity() * ball.get_radius() * ball.get_radius();
   }
   return ENERGY;
@@ -25,7 +25,7 @@ double get_system_energy(const std::vector<Ball>& balls) {
 #include <iostream>
 
 int main() {
-  sf::RenderWindow window(sf::VideoMode(WINDOW_X, WINDOW_Y), "ball collision demo");
+  sf::RenderWindow window(sf::VideoMode(WINDOW_X, WINDOW_Y), "Ball collision demo");
   std::mt19937 gen(std::chrono::steady_clock::now().time_since_epoch().count());
 
   HeapQuadTree quad_tree({std::max(WINDOW_Y, WINDOW_X) / 2,
@@ -37,8 +37,8 @@ int main() {
   size_t balls_count = 2;
   std::vector<Ball> balls(balls_count);
 
-  balls[0].set_properties({680, 54}, {0.774232, -0.632902}, 55, 20, false);
-  balls[1].set_properties({763, 141}, {0.71478, -0.699349}, 50, 10, false);
+  balls[0].set_properties({90.5955, 227.57}, {-0.449566, -0.893247}, 58, 24, false);
+  balls[1].set_properties({189.459, 254.972}, {-0.981131, -0.193346}, 45, 33, false);
 
 
   // TODO: May be we need to set framerate limit before balls insertion?
@@ -77,19 +77,20 @@ int main() {
           if (ball.intersects(other)) {
             ball.set_collided(true);
             other.set_collided(true);
-            collide(ball, other, deltaTime);
+            collide(ball, other);
             std::cout << "ENERGY = " << get_system_energy(balls) << '\n';
           }
         }
       }
     }
+    break;
 
     for (auto &ball : balls) {
       ball.move(deltaTime);
     }
 
     window.clear();
-    // We need to specify &. Otherwise we'll create ball's
+    // We need to specify &. Otherwise we'll create Ball's
     // copy while we iterate through balls vector.
     for (const auto &ball : balls) {
       ball.draw(window);

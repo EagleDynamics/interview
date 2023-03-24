@@ -1,7 +1,6 @@
 #ifndef INTERVIEW_BALLCOLLISION_QUADTREE_H_
 #define INTERVIEW_BALLCOLLISION_QUADTREE_H_
 
-#include <unordered_set>
 #include "Ball.h"
 
 class HeapQuadTree;
@@ -9,7 +8,7 @@ class HeapQuadTree;
 class base_quad_tree {
  protected:
   struct AABB {
-    sf::Vector2f center_{0, 0};
+    Vector2d center_{0, 0};
     double half_of_length_ = 0;
 
     AABB() = default;
@@ -86,6 +85,7 @@ class StackQuadTree : public base_quad_tree {
                const AABB &range,
                std::vector<uint32_t> &close_balls_id) const override;
 
+    Node() = default;
     Node(const AABB &boundary) :
         BaseNode(boundary) {}
   };
@@ -97,7 +97,7 @@ class StackQuadTree : public base_quad_tree {
   StackQuadTree(const AABB &boundary);
   StackQuadTree(const std::vector<Ball> &balls,
                 const AABB &boundary);
-//  void update(const std::vector<Ball> &balls) override;
+  void update(const std::vector<Ball> &balls) override;
 };
 
 #endif //INTERVIEW_BALLCOLLISION_QUADTREE_H_

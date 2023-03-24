@@ -35,7 +35,7 @@ void Ball::set_rand_place(std::mt19937 &gen) {
 void Ball::set_rand_properties(std::mt19937 &gen) {
   // Direction vector must be a unit vector if we use
   // suggested move-method. Also this vector can't be a
-  // null vector if ball has non-zero velocity_. So after we get
+  // null vector if Ball has non-zero velocity_. So after we get
   // not null direction vector we need to normalize it.
   set_rand_dir(gen);
   set_rand_radius(gen);
@@ -44,15 +44,19 @@ void Ball::set_rand_properties(std::mt19937 &gen) {
 }
 
 void Ball::set_properties(Vector2d center,
-                    Vector2d direction,
-                    double radius,
-                    double velocity,
-                    bool is_collided) {
+                          Vector2d direction,
+                          double radius,
+                          double velocity,
+                          bool is_collided) {
   center_ = center;
   direction_ = direction;
   radius_ = radius;
   velocity_ = velocity;
   is_collided_ = is_collided;
+}
+
+void Ball::set_center(const Vector2d &center) {
+  center_ = center;
 }
 
 void Ball::set_collided(bool state) {
@@ -96,11 +100,10 @@ double Ball::get_tetta() const {
   return tetta;
 }
 
-// wikipedia.org/wiki/Elastic_collision
 void Ball::update_velocity(double v_1, double v_2,
-                     double m_1, double m_2,
-                     double tetta_1, double tetta_2,
-                     double phi) {
+                           double m_1, double m_2,
+                           double tetta_1, double tetta_2,
+                           double phi) {
   Vector2d v_1_upd;
   v_1_upd.x = ((v_1 * cos(tetta_1 - phi) * (m_1 - m_2)) +
       2 * m_2 * v_2 * cos(tetta_2 - phi)) * cos(phi) / (m_1 + m_2) +
@@ -119,21 +122,7 @@ void Ball::update_velocity(double v_1, double v_2,
   }
 }
 
-#include <iostream>
-
-std::ostream& operator<<(std::ostream& os, const Vector2d& obj) {
-  os << "(" << obj.x << ", " << obj.y << ")";
-  return os;
-}
-
-void Ball::get_info() const {
-  std::cout << "center = " << center_ << '\n';
-  std::cout << "direction = " << direction_ << '\n';
-  std::cout << "radius = " << radius_ << '\n';
-  std::cout << "velocity = " << velocity_ << '\n';
-}
-
-void collide(Ball &ball_1, Ball &ball_2, double deltaTime) {
+void collide(Ball &ball_1, Ball &ball_2) {
   double m_1 = ball_1.radius_ * ball_1.radius_,
       m_2 = ball_2.radius_ * ball_2.radius_;
   double v_1 = ball_1.velocity_,
@@ -143,28 +132,13 @@ void collide(Ball &ball_1, Ball &ball_2, double deltaTime) {
   Vector2d center_1 = ball_1.get_center(),
       center_2 = ball_2.get_center();
   Vector2d center_line = center_2 - center_1;
-  double phi = 0;
+  double r_1 = ball_1.get_radius(),
+      r_2 = ball_2.get_radius();
+  ball_2.set_center(center_1 + center_line / get_length(center_line) * (r_1 + r_2));
+  double phi = PI / 2;
   if (center_line.x != 0) {
     phi = atan(center_line.y / center_line.x);
-  } else {
-    phi = PI / 2;
   }
-  auto tmp_1 = ball_1, tmp_2 = ball_2;
   ball_1.update_velocity(v_1, v_2, m_1, m_2, tetta_1, tetta_2, phi);
   ball_2.update_velocity(v_2, v_1, m_2, m_1, tetta_2, tetta_1, phi);
-  ball_1.move(deltaTime);
-  ball_2.move(deltaTime);
-  if (ball_1.intersects(ball_2)) {
-    std::cout << "----Ball 1----\n";
-    tmp_1.get_info();
-    std::cout << "----Ball 2----\n";
-    tmp_2.get_info();
-
-    std::cout << "\n\n----UPDATE----\n";
-    std::cout << "----Ball 1----\n";
-    ball_1.get_info();
-    std::cout << "----Ball 2----\n";
-    ball_2.get_info();
-//    assert(false);
-  }
 }
