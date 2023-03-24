@@ -1,6 +1,6 @@
-#include "QuadTree.h"
+#include "BaseQuadTree.h"
 
-bool QuadTree::AABB::contains(const Ball &ball) const {
+bool BaseQuadTree::AABB::contains(const Ball &ball) const {
   auto ball_center = ball.get_center();
   float radius = ball.get_radius();
   if ((ball_center.x + radius >= center_.x - half_of_length_) &&
@@ -13,7 +13,7 @@ bool QuadTree::AABB::contains(const Ball &ball) const {
   }
 }
 
-bool QuadTree::AABB::intersects(const AABB &other) const {
+bool BaseQuadTree::AABB::intersects(const AABB &other) const {
   if ((std::abs(center_.x - other.center_.x) <
       half_of_length_ + other.half_of_length_) &&
       (std::abs(center_.y - other.center_.y) <
@@ -24,8 +24,24 @@ bool QuadTree::AABB::intersects(const AABB &other) const {
   }
 }
 
-QuadTree::QuadTree(const std::vector<Ball> &balls,
-                   const AABB &boundary) : balls_(balls) {
+BaseQuadTree::BaseQuadTree(const std::vector<Ball> &balls) : balls_(balls) {}
+
+std::vector<uint32_t> BaseQuadTree::get_close_balls(const Ball &ball) {
+  auto search_range = AABB{ball.get_center().x,
+                           ball.get_center().y,
+                           ball.get_radius() + 1};
+  return query(search_range);
+}
+
+std::vector<uint32_t> BaseQuadTree::query(const AABB &range) {
+  std::vector<uint32_t> close_balls;
+  root_->query(this, range, close_balls);
+  return close_balls;
+}
+
+// ---------HEAP QUAD TREE---------
+HeapQuadTree::HeapQuadTree(const std::vector<Ball> &balls, const AABB &boundary) :
+    BaseQuadTree(balls){
   root_ = std::make_unique<Node>(boundary);
   uint32_t balls_count = balls.size();
   for (uint32_t i = 0; i < balls_count; ++i) {
@@ -33,7 +49,7 @@ QuadTree::QuadTree(const std::vector<Ball> &balls,
   }
 }
 
-void QuadTree::Node::subdivide() {
+void HeapQuadTree::Node::subdivide() {
   float quarter_length = boundary.half_of_length_ / 2;
   children[0] = std::make_unique<Node>(
       AABB{boundary.center_.x - quarter_length,
@@ -53,7 +69,7 @@ void QuadTree::Node::subdivide() {
            quarter_length});
 }
 
-bool QuadTree::Node::insert(QuadTree *qt_ptr, uint32_t idx) {
+bool HeapQuadTree::Node::insert(BaseQuadTree *qt_ptr, uint32_t idx) {
   if (boundary.contains(qt_ptr->balls_[idx])) {
     if (children[0] == nullptr) {
       if (balls_id.size() < qt_ptr->MAX_AABB_BALLS_COUNT) {
@@ -71,22 +87,9 @@ bool QuadTree::Node::insert(QuadTree *qt_ptr, uint32_t idx) {
   }
 }
 
-std::vector<uint32_t> QuadTree::get_close_balls(const Ball &ball) {
-  auto search_range = AABB{ball.get_center().x,
-                           ball.get_center().y,
-                           ball.get_radius() + 1};
-  return query(search_range);
-}
-
-std::vector<uint32_t> QuadTree::query(const AABB &range) {
-  std::vector<uint32_t> close_balls;
-  root_->query(this, range, close_balls);
-  return close_balls;
-}
-
-void QuadTree::Node::query(QuadTree *qt_ptr,
-                           const AABB &range,
-                           std::vector<uint32_t> &close_balls) {
+void HeapQuadTree::Node::query(BaseQuadTree *qt_ptr,
+                               const AABB &range,
+                               std::vector<uint32_t> &close_balls) {
   if (!boundary.intersects(range)) {
     return;
   }
@@ -102,3 +105,4 @@ void QuadTree::Node::query(QuadTree *qt_ptr,
   }
 }
 
+// ---------STACK QUAD TREE---------

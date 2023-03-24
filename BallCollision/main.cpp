@@ -1,110 +1,88 @@
+#include <chrono>
+#include <random>
 #include "SFML/Graphics.hpp"
-#include "MiddleAverageFilter.h"
+#include "lib/MiddleAverageFilter.h"
+#include "lib/Ball.h"
+#include "BaseQuadTree.h"
+Math::MiddleAverageFilter<float, 100> fpscounter;
 
-constexpr int WINDOW_X = 1024;
-constexpr int WINDOW_Y = 768;
-constexpr int MAX_BALLS = 300;
-constexpr int MIN_BALLS = 100;
-
-Math::MiddleAverageFilter<float,100> fpscounter;
-
-struct Ball
-{
-    sf::Vector2f p;
-    sf::Vector2f dir;
-    float r = 0;
-    float speed = 0;
-};
-
-void draw_ball(sf::RenderWindow& window, const Ball& ball)
-{
-    sf::CircleShape gball;
-    gball.setRadius(ball.r);
-    gball.setPosition(ball.p.x, ball.p.y);
-    window.draw(gball);
+void draw_fps(sf::RenderWindow &window, float fps) {
+  char c[32];
+  snprintf(c, 32, "FPS: %f", fps);
+  std::string string(c);
+  sf::String str(c);
+  window.setTitle(str);
 }
 
-void move_ball(Ball& ball, float deltaTime)
-{
-    float dx = ball.dir.x * ball.speed * deltaTime;
-    float dy = ball.dir.y * ball.speed * deltaTime;
-    ball.p.x += dx;
-    ball.p.y += dy;
-}
+int main() {
+  sf::RenderWindow window(sf::VideoMode(WINDOW_X, WINDOW_Y), "ball collision demo");
+  std::mt19937 gen(std::chrono::steady_clock::now().time_since_epoch().count());
 
-void draw_fps(sf::RenderWindow& window, float fps)
-{
-    char c[32];
-    snprintf(c, 32, "FPS: %f", fps);
-    std::string string(c);
-    sf::String str(c);
-    window.setTitle(str);
-}
+  // rand() returns new number every time we invoke it.
+  // So we had to take this function-call out of the for-loop condition
+  size_t balls_count = gen() % (MAX_BALLS - MIN_BALLS) + MIN_BALLS;
+  std::vector<Ball> balls(balls_count);
 
-int main()
-{
-    sf::RenderWindow window(sf::VideoMode(WINDOW_X, WINDOW_Y), "ball collision demo");
-    srand(time(NULL));
+  // randomly initialize balls
+  for (size_t i = 0; i < balls_count; ++i) {
+    Ball newBall;
+    newBall.set_rand_properties(gen);
+    balls[i] = newBall;
+  }
 
-    std::vector<Ball> balls;
+  // TODO: May be we need to set framerate limit before balls insertion?
+  window.setFramerateLimit(120);
 
-    // randomly initialize balls
-    for (int i = 0; i < (rand() % (MAX_BALLS - MIN_BALLS) + MIN_BALLS); i++)
-    {
-        Ball newBall;
-        newBall.p.x = rand() % WINDOW_X;
-        newBall.p.y = rand() % WINDOW_Y;
-        newBall.dir.x = (-5 + (rand() % 10)) / 3.;
-        newBall.dir.y = (-5 + (rand() % 10)) / 3.;
-        newBall.r = 5 + rand() % 5;
-        newBall.speed = 30 + rand() % 30;
-        balls.push_back(newBall);
+  sf::Clock clock;
+  float lastime = clock.restart().asSeconds();
+
+  while (window.isOpen()) {
+    sf::Event event;
+    while (window.pollEvent(event)) {
+      if (event.type == sf::Event::Closed) {
+        window.close();
+      }
     }
 
-   // window.setFramerateLimit(60);
+    float current_time = clock.getElapsedTime().asSeconds();
+    float deltaTime = current_time - lastime;
+    fpscounter.push(1.0f / (current_time - lastime));
+    lastime = current_time;
 
-    sf::Clock clock;
-    float lastime = clock.restart().asSeconds();
-
-    while (window.isOpen())
-    {
-
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                window.close();
-            }
-        }
-
-        float current_time = clock.getElapsedTime().asSeconds();
-        float deltaTime = current_time - lastime;
-        fpscounter.push(1.0f / (current_time - lastime));
-        lastime = current_time;
-
-        /// <summary>
-        /// TODO: PLACE COLLISION CODE HERE 
-        /// объекты создаются в случайном месте на плоскости со случайным вектором скорости, имеют радиус R
-        /// Объекты движутся кинетически. Пространство ограниченно границами окна
-        /// Напишите обработчик столкновений шаров между собой и краями окна. Как это сделать эффективно?
-        /// Массы пропорцианальны площадям кругов, описывающих объекты 
-        /// Как можно было-бы улучшить текущую архитектуру кода?
-        /// Данный код является макетом, вы можете его модифицировать по своему усмотрению
-
-        for (auto& ball : balls)
-        {
-            move_ball(ball, deltaTime);
-        }
-
-        window.clear();
-        for (const auto ball : balls)
-        {
-            draw_ball(window, ball);
-        }
-
-		//draw_fps(window, fpscounter.getAverage());
-		window.display();
+    for (auto &ball : balls) {
+      ball.set_collided(false);
     }
-    return 0;
+
+    HeapQuadTree quad_tree(balls, {std::max(WINDOW_Y, WINDOW_X) / 2,
+                                   std::max(WINDOW_Y, WINDOW_X) / 2,
+                                   std::max(WINDOW_Y, WINDOW_X) / 2});
+
+    for (auto &ball : balls) {
+      auto close_balls_id = quad_tree.get_close_balls(ball);
+      for (uint32_t id : close_balls_id) {
+        Ball other = balls[id];
+        if (ball != other) {
+          if (ball.intersects(other)) {
+            ball.set_collided(true);
+            other.set_collided(true);
+          }
+        }
+      }
+    }
+
+    for (auto &ball : balls) {
+      ball.move(deltaTime);
+    }
+
+    window.clear();
+    // We need to specify &. Otherwise we'll create ball's
+    // copy while we iterate through balls vector.
+    for (const auto &ball : balls) {
+      ball.draw(window);
+    }
+
+    draw_fps(window, fpscounter.getAverage());
+    window.display();
+  }
+  return 0;
 }
