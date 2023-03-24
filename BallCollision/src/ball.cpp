@@ -134,7 +134,13 @@ void collide(Ball &ball_1, Ball &ball_2) {
   Vector2d center_line = center_2 - center_1;
   double r_1 = ball_1.get_radius(),
       r_2 = ball_2.get_radius();
-  ball_2.set_center(center_1 + center_line / get_length(center_line) * (r_1 + r_2));
+  // TODO: there may be several exotic cases:
+  // 1. second ball with new center goes outside the window
+  // 2. second balls with new center is superimposed on some another ball
+  // in both cases, further imposition of some balls is possible.
+  // But such cases are unlikely.
+  ball_2.set_center(
+      center_1 + center_line / get_length(center_line) * (r_1 + r_2));
   double phi = PI / 2;
   if (center_line.x != 0) {
     phi = atan(center_line.y / center_line.x);
