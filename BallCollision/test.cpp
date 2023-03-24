@@ -14,6 +14,16 @@ void draw_fps(sf::RenderWindow &window, double fps) {
   window.setTitle(str);
 }
 
+double get_system_energy(const std::vector<Ball>& balls) {
+  double ENERGY = 0;
+  for (auto& ball: balls) {
+    ENERGY += ball.get_velocity() * ball.get_radius() * ball.get_radius();
+  }
+  return ENERGY;
+}
+
+#include <iostream>
+
 int main() {
   sf::RenderWindow window(sf::VideoMode(WINDOW_X, WINDOW_Y), "ball collision demo");
   std::mt19937 gen(std::chrono::steady_clock::now().time_since_epoch().count());
@@ -42,6 +52,8 @@ int main() {
 
   sf::Clock clock;
   double lastime = clock.restart().asSeconds();
+
+  std::cout << "ENERGY = " << get_system_energy(balls) << '\n';
 
   while (window.isOpen()) {
     sf::Event event;
@@ -72,6 +84,7 @@ int main() {
             ball.set_collided(true);
             other.set_collided(true);
             collide(ball, other, deltaTime);
+            std::cout << "ENERGY = " << get_system_energy(balls) << '\n';
           }
         }
       }

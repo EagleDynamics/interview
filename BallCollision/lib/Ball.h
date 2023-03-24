@@ -2,19 +2,20 @@
 #define INTERVIEW_BALLCOLLISION_BALL_H_
 
 #include <cassert>
-#include <cmath>
 #include <random>
 #include "SFML/Graphics.hpp"
-#include "Constants.h"
+#include "constants.h"
 
-float get_length(const sf::Vector2f &vec);
+using Vector2d = sf::Vector2<double>;
+
+const double PI = 3.1415926535;
 
 class Ball {
  private:
-  sf::Vector2f center_{0, 0};
-  sf::Vector2f direction_{0, 0};
-  float radius_ = 0;
-  float velocity_ = 0;
+  Vector2d center_{0, 0};
+  Vector2d direction_{0, 0};
+  double radius_ = 0;
+  double velocity_ = 0;
   bool is_collided_ = false;
 
  private:
@@ -24,24 +25,49 @@ class Ball {
   void set_rand_speed(std::mt19937 &gen);
   void set_rand_place(std::mt19937 &gen);
 
+  double get_tetta() const;
+  void update_velocity(double v_1, double v_2,
+                       double m_1, double m_2,
+                       double tetta_1, double tetta_2,
+                       double phi);
+
  public:
-  float get_radius() const { return radius_; }
-  sf::Vector2f get_center() const { return center_; }
-//  sf::Vector2f get_dir() const { return direction_; }
+  double get_radius() const { return radius_; }
+  Vector2d get_center() const { return center_; }
+  double get_velocity() const { return velocity_; }
+//  Vector2d get_dir() const { return direction_; }
   void set_rand_properties(std::mt19937 &gen);
+  void set_properties(Vector2d center,
+                      Vector2d direction,
+                      double radius,
+                      double velocity,
+                      bool is_collided);
   void set_collided(bool state);
   void draw(sf::RenderWindow &window) const;
+  void get_info() const;
 
-  void move(float deltaTime) {
+  void move(double deltaTime) {
     center_.x += direction_.x * velocity_ * deltaTime;
     center_.y += direction_.y * velocity_ * deltaTime;
+    if (center_.x + radius_ >= WINDOW_X ||
+        center_.x - radius_ <= 0) {
+      direction_.x *= -1;
+    }
+    if (center_.y + radius_ >= WINDOW_Y ||
+        center_.y - radius_ <= 0) {
+      direction_.y *= -1;
+    }
   }
 
   bool intersects(const Ball &other) const;
 
  public:
-  bool operator==(const Ball& other) const;
-  bool operator!=(const Ball& other) const;
+  bool operator==(const Ball &other) const;
+  bool operator!=(const Ball &other) const;
+
+  friend void collide(Ball &ball_1, Ball &ball_2, double deltaTime);
 };
+
+void collide(Ball &ball_1, Ball &ball_2, double deltaTime);
 
 #endif //INTERVIEW_BALLCOLLISION_BALL_H_

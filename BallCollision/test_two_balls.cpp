@@ -14,6 +14,16 @@ void draw_fps(sf::RenderWindow &window, double fps) {
   window.setTitle(str);
 }
 
+double get_system_energy(const std::vector<Ball>& balls) {
+  double ENERGY = 0;
+  for (auto& ball: balls) {
+    ENERGY += ball.get_velocity() * ball.get_radius() * ball.get_radius();
+  }
+  return ENERGY;
+}
+
+#include <iostream>
+
 int main() {
   sf::RenderWindow window(sf::VideoMode(WINDOW_X, WINDOW_Y), "ball collision demo");
   std::mt19937 gen(std::chrono::steady_clock::now().time_since_epoch().count());
@@ -24,24 +34,20 @@ int main() {
 
   // rand() returns new number every time we invoke it.
   // So we had to take this function-call out of the for-loop condition
-  size_t balls_count = gen() % (MAX_BALLS - MIN_BALLS) + MIN_BALLS;
+  size_t balls_count = 2;
   std::vector<Ball> balls(balls_count);
 
-  // randomly initialize balls
-  for (size_t i = 0; i < balls_count; ++i) {
-    Ball newBall;
-    do {
-      newBall.set_rand_properties(gen);
-    } while (quad_tree.is_collided(newBall));
-    quad_tree.insert(newBall);
-    balls[i] = newBall;
-  }
+  balls[0].set_properties({680, 54}, {0.774232, -0.632902}, 55, 20, false);
+  balls[1].set_properties({763, 141}, {0.71478, -0.699349}, 50, 10, false);
+
 
   // TODO: May be we need to set framerate limit before balls insertion?
   window.setFramerateLimit(120);
 
   sf::Clock clock;
   double lastime = clock.restart().asSeconds();
+
+  std::cout << "ENERGY = " << get_system_energy(balls) << '\n';
 
   while (window.isOpen()) {
     sf::Event event;
@@ -72,6 +78,7 @@ int main() {
             ball.set_collided(true);
             other.set_collided(true);
             collide(ball, other, deltaTime);
+            std::cout << "ENERGY = " << get_system_energy(balls) << '\n';
           }
         }
       }
