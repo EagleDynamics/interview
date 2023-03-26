@@ -1,5 +1,12 @@
 #include "quad_tree.h"
 
+base_quad_tree::AABB::AABB(const sf::RenderWindow &window) {
+  auto size = window.getSize();
+  center_ = {(double) std::max(size.x, size.y) / 2,
+             (double) std::max(size.x, size.y) / 2};
+  half_of_length_ = (double) std::max(size.x, size.y) / 2;
+}
+
 bool base_quad_tree::AABB::contains(const Ball &ball) const {
   auto ball_center = ball.get_center();
   double radius = ball.get_radius();
@@ -24,7 +31,8 @@ bool base_quad_tree::AABB::intersects(const AABB &other) const {
   }
 }
 
-base_quad_tree::base_quad_tree(const std::vector<Ball> &balls) : balls_(balls) {}
+base_quad_tree::base_quad_tree(const std::vector<Ball> &balls)
+    : balls_(balls) {}
 
 std::vector<uint32_t> base_quad_tree::get_close_balls(const Ball &ball) const {
   auto search_range = AABB{ball.get_center().x,
@@ -60,7 +68,12 @@ heap_quad_tree::heap_quad_tree(const AABB &boundary) {
   root_ = std::make_unique<Node>(boundary);
 }
 
-heap_quad_tree::heap_quad_tree(const std::vector<Ball> &balls, const AABB &boundary) :
+heap_quad_tree::heap_quad_tree(const sf::RenderWindow &window) {
+  root_ = std::make_unique<Node>(window);
+}
+
+heap_quad_tree::heap_quad_tree(const std::vector<Ball> &balls,
+                               const AABB &boundary) :
     base_quad_tree(balls) {
   root_ = std::make_unique<Node>(boundary);
   uint32_t balls_count = balls.size();
@@ -135,7 +148,6 @@ void heap_quad_tree::update(const std::vector<Ball> &balls) {
   }
 }
 
-
 // ---------STACK QUAD TREE---------
 // Use it when you have enough the stack size.
 // Fewer freezes expected.
@@ -144,7 +156,8 @@ stack_quad_tree::stack_quad_tree(const AABB &boundary) {
   nodes_.emplace_back(boundary);
 }
 
-stack_quad_tree::stack_quad_tree(const std::vector<Ball> &balls, const AABB &boundary) :
+stack_quad_tree::stack_quad_tree(const std::vector<Ball> &balls,
+                                 const AABB &boundary) :
     base_quad_tree(balls) {
   root_ = std::make_unique<Node>(boundary);
   nodes_.emplace_back(boundary);
@@ -187,7 +200,10 @@ bool stack_quad_tree::Node::insert(base_quad_tree *qt_ptr, uint32_t idx) {
     }
     bool is_inserted = false;
     for (uint32_t i = 0; i < 4; ++i) {
-      is_inserted |= dynamic_cast<stack_quad_tree *>(qt_ptr)->nodes_[children[i]].insert(qt_ptr, idx);
+      is_inserted |=
+          dynamic_cast<stack_quad_tree *>(qt_ptr)->nodes_[children[i]].insert(
+              qt_ptr,
+              idx);
     }
     return is_inserted;
   }
@@ -206,7 +222,10 @@ void stack_quad_tree::Node::query(const base_quad_tree *qt_ptr,
   }
   if (children[0] != 0) {
     for (uint32_t i = 0; i < 4; ++i) {
-      dynamic_cast<const stack_quad_tree *>(qt_ptr)->nodes_[children[i]].query(qt_ptr, range, close_balls);
+      dynamic_cast<const stack_quad_tree *>(qt_ptr)->nodes_[children[i]].query(
+          qt_ptr,
+          range,
+          close_balls);
     }
   }
 }

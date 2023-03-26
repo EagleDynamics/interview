@@ -3,8 +3,6 @@
 
 #include "ball.h"
 
-class heap_quad_tree;
-
 class base_quad_tree {
  protected:
   struct AABB {
@@ -14,6 +12,7 @@ class base_quad_tree {
     AABB() = default;
     AABB(double x, double y, double half_of_length) :
         center_(x, y), half_of_length_(half_of_length) {}
+    AABB(const sf::RenderWindow &window);
 
     bool contains(const Ball &ball) const;
     bool intersects(const AABB &other) const;
@@ -69,6 +68,7 @@ class heap_quad_tree : public base_quad_tree {
 
  public:
   heap_quad_tree(const AABB &boundary);
+  heap_quad_tree(const sf::RenderWindow &window);
   heap_quad_tree(const std::vector<Ball> &balls,
                  const AABB &boundary);
   void update(const std::vector<Ball> &balls) override;
@@ -95,6 +95,7 @@ class stack_quad_tree : public base_quad_tree {
 
  public:
   stack_quad_tree(const AABB &boundary);
+  stack_quad_tree(const sf::RenderWindow &window);
   stack_quad_tree(const std::vector<Ball> &balls,
                   const AABB &boundary);
   void update(const std::vector<Ball> &balls) override;

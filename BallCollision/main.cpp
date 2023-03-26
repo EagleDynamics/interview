@@ -18,9 +18,7 @@ int main() {
   sf::RenderWindow window(sf::VideoMode(WINDOW_X, WINDOW_Y), "Ball collision demo");
   std::mt19937 gen(std::chrono::steady_clock::now().time_since_epoch().count());
 
-  heap_quad_tree quad_tree({std::max(WINDOW_Y, WINDOW_X) / 2,
-                            std::max(WINDOW_Y, WINDOW_X) / 2,
-                            std::max(WINDOW_Y, WINDOW_X) / 2});
+  heap_quad_tree quad_tree(window);
 
   // rand() returns new number every time we invoke it.
   // So we had to take this function-call out of the for-loop condition
