@@ -12,6 +12,7 @@ void Ball::normalize_dir() {
 double Ball::get_radius() const { return radius_; }
 Vector2d Ball::get_center() const { return center_; }
 double Ball::get_velocity() const { return velocity_; }
+bool Ball::is_collided() const { return is_collided_; }
 
 void Ball::set_rand_dir(std::mt19937 &gen) {
   while (direction_ == Vector2d{0, 0}) {
@@ -66,16 +67,6 @@ void Ball::set_center(const Vector2d &center) {
 
 void Ball::set_collided(bool state) {
   is_collided_ = state;
-}
-
-void Ball::draw(sf::RenderWindow &window) const {
-  sf::CircleShape gball;
-  gball.setRadius(radius_);
-  gball.setPosition(sf::Vector2f(center_ - Vector2d{radius_, radius_}));
-  if (is_collided_) {
-    gball.setFillColor(sf::Color(150, 50, 250));
-  }
-  window.draw(gball);
 }
 
 void Ball::move(double deltaTime) {

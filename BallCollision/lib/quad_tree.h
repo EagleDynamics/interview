@@ -9,7 +9,9 @@ class base_quad_tree {
     Vector2d center_{0, 0};
     double half_of_length_ = 0;
 
-    AABB() = default;
+    AABB() : center_{(double) std::max(WINDOW_X, WINDOW_Y) / 2,
+                      (double) std::max(WINDOW_X, WINDOW_Y) / 2},
+             half_of_length_((double) std::max(WINDOW_X, WINDOW_Y) / 2) {}
     AABB(double x, double y, double half_of_length) :
         center_(x, y), half_of_length_(half_of_length) {}
     AABB(const sf::RenderWindow &window);
@@ -62,11 +64,13 @@ class heap_quad_tree : public base_quad_tree {
                const AABB &range,
                std::vector<uint32_t> &close_balls_id) const override;
 
+    Node() = default;
     Node(const AABB &boundary) :
         BaseNode(boundary) {}
   };
 
  public:
+  heap_quad_tree();
   heap_quad_tree(const AABB &boundary);
   heap_quad_tree(const sf::RenderWindow &window);
   heap_quad_tree(const std::vector<Ball> &balls,
@@ -94,6 +98,7 @@ class stack_quad_tree : public base_quad_tree {
   std::vector<Node> nodes_;
 
  public:
+  stack_quad_tree();
   stack_quad_tree(const AABB &boundary);
   stack_quad_tree(const sf::RenderWindow &window);
   stack_quad_tree(const std::vector<Ball> &balls,

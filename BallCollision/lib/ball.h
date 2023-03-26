@@ -34,6 +34,7 @@ class Ball {
   double get_radius() const;
   Vector2d get_center() const;
   double get_velocity() const;
+  bool is_collided() const;
   void set_rand_properties(std::mt19937 &gen);
   void set_properties(const Vector2d &center,
                       const Vector2d &direction,
@@ -42,7 +43,6 @@ class Ball {
                       bool is_collided);
   void set_center(const Vector2d &center);
   void set_collided(bool state);
-  void draw(sf::RenderWindow &window) const;
 
   void move(double deltaTime);
 

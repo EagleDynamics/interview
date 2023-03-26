@@ -64,6 +64,10 @@ std::vector<uint32_t> base_quad_tree::query(const AABB &range) const {
 }
 
 // ---------HEAP QUAD TREE---------
+heap_quad_tree::heap_quad_tree() {
+  root_ = std::make_unique<Node>();
+}
+
 heap_quad_tree::heap_quad_tree(const AABB &boundary) {
   root_ = std::make_unique<Node>(boundary);
 }
@@ -151,6 +155,11 @@ void heap_quad_tree::update(const std::vector<Ball> &balls) {
 // ---------STACK QUAD TREE---------
 // Use it when you have enough the stack size.
 // Fewer freezes expected.
+stack_quad_tree::stack_quad_tree() {
+  root_ = std::make_unique<Node>();
+  nodes_.emplace_back();
+}
+
 stack_quad_tree::stack_quad_tree(const AABB &boundary) {
   root_ = std::make_unique<Node>(boundary);
   nodes_.emplace_back(boundary);
