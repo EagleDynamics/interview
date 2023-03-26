@@ -40,8 +40,6 @@
 
 # Architecture
 
-Диаграмма в скором времени обновится в соответствии с новой архитектурой.
-
 ![Alt text](UML/class_diagram.png?raw=true "Class diagram")
 
 # Build

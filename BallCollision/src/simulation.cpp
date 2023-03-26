@@ -16,13 +16,13 @@ void Simulation::init_simulation() {
     quad_tree_.insert(balls_[i]);
   }
 
-  last_time_ = clock.restart().asSeconds();
+  last_time_ = clock_.restart().asSeconds();
 }
 
 void Simulation::recalculate() {
-  double current_time = clock.getElapsedTime().asSeconds();
+  double current_time = clock_.getElapsedTime().asSeconds();
   double deltaTime = current_time - last_time_;
-  fpscounter.push(1.0f / (current_time - last_time_));
+  fpscounter_.push(1.0f / (current_time - last_time_));
   last_time_ = current_time;
 
   for (auto &ball : balls_) {
@@ -52,6 +52,8 @@ void Simulation::recalculate() {
   }
 }
 
+Simulation::~Simulation() {}
+
 void SimulationUI::init_window() {
   window.setFramerateLimit(120);
 }
@@ -73,7 +75,7 @@ void SimulationUI::redraw() {
 
 void SimulationUI::draw_fps() {
   char c[32];
-  snprintf(c, 32, "FPS: %f", fpscounter.getAverage());
+  snprintf(c, 32, "FPS: %f", fpscounter_.getAverage());
   std::string string(c);
   sf::String str(c);
   window.setTitle(str);

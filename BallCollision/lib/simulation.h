@@ -13,9 +13,9 @@ class Simulation {
  protected:
   std::vector<Ball> balls_;
   heap_quad_tree quad_tree_;
-  sf::Clock clock;
+  sf::Clock clock_;
   double last_time_{0};
-  Math::middle_average_filter<double, 100> fpscounter;
+  Math::middle_average_filter<double, 100> fpscounter_;
 
  protected:
   void init_simulation();
@@ -24,7 +24,7 @@ class Simulation {
  public:
   Simulation() = default;
 
-  virtual void start() = 0;
+  virtual ~Simulation() = 0;
 };
 
 class SimulationUI: protected Simulation {
@@ -39,7 +39,7 @@ class SimulationUI: protected Simulation {
 
  public:
   SimulationUI() = default;
-  void start() override;
+  void start();
 };
 
 #endif //MAIN_BALLCOLLISION_LIB_SIMULATION_H_

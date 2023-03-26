@@ -63,14 +63,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:abe889b42a65bcd8eefc16419645d08a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the elapsed time.  <a href="#abe889b42a65bcd8eefc16419645d08a7">More...</a><br /></td></tr>
 <tr class="separator:abe889b42a65bcd8eefc16419645d08a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a123e2627f2943e5ecaa1db0c7df3231b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsf_1_1Time.html">Time</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsf_1_1Clock.html#a123e2627f2943e5ecaa1db0c7df3231b">restart</a> ()</td></tr>
-<tr class="memdesc:a123e2627f2943e5ecaa1db0c7df3231b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restart the clock.  <a href="#a123e2627f2943e5ecaa1db0c7df3231b">More...</a><br /></td></tr>
+<tr class="memdesc:a123e2627f2943e5ecaa1db0c7df3231b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restart the clock_.  <a href="#a123e2627f2943e5ecaa1db0c7df3231b">More...</a><br /></td></tr>
 <tr class="separator:a123e2627f2943e5ecaa1db0c7df3231b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Utility class that measures the elapsed time. </p>
 <p><a class="el" href="classsf_1_1Clock.html" title="Utility class that measures the elapsed time. ">sf::Clock</a> is a lightweight class for measuring time.</p>
 <p>Its provides the most precise time that the underlying OS can achieve (generally microseconds or nanoseconds). It also ensures monotonicity, which means that the returned time can never go backward, even if the system time is changed.</p>
-<p>Usage example: </p><div class="fragment"><div class="line"><a class="code" href="classsf_1_1Clock.html">sf::Clock</a> clock;</div><div class="line">...</div><div class="line">Time time1 = clock.<a class="code" href="classsf_1_1Clock.html#abe889b42a65bcd8eefc16419645d08a7">getElapsedTime</a>();</div><div class="line">...</div><div class="line"><a class="code" href="classsf_1_1Time.html#acba0cfbc49e3a09a22a8e079eb67a05c">Time</a> time2 = clock.<a class="code" href="classsf_1_1Clock.html#a123e2627f2943e5ecaa1db0c7df3231b">restart</a>();</div></div><!-- fragment --><p>The <a class="el" href="classsf_1_1Time.html" title="Represents a time value. ">sf::Time</a> value returned by the clock can then be converted to a number of seconds, milliseconds or even microseconds.</p>
+<p>Usage example: </p><div class="fragment"><div class="line"><a class="code" href="classsf_1_1Clock.html">sf::Clock</a> clock_;</div><div class="line">...</div><div class="line">Time time1 = clock_.<a class="code" href="classsf_1_1Clock.html#abe889b42a65bcd8eefc16419645d08a7">getElapsedTime</a>();</div><div class="line">...</div><div class="line"><a class="code" href="classsf_1_1Time.html#acba0cfbc49e3a09a22a8e079eb67a05c">Time</a> time2 = clock_.<a class="code" href="classsf_1_1Clock.html#a123e2627f2943e5ecaa1db0c7df3231b">restart</a>();</div></div><!-- fragment --><p>The <a class="el" href="classsf_1_1Time.html" title="Represents a time value. ">sf::Time</a> value returned by the clock_ can then be converted to a number of seconds, milliseconds or even microseconds.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classsf_1_1Time.html" title="Represents a time value. ">sf::Time</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="Clock_8hpp_source.html#l00041">41</a> of file <a class="el" href="Clock_8hpp_source.html">Clock.hpp</a>.</p>
@@ -91,7 +91,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Default constructor. </p>
-<p>The clock starts automatically after being constructed. </p>
+<p>The clock_ starts automatically after being constructed. </p>
 
 </div>
 </div>
@@ -112,7 +112,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the elapsed time. </p>
-<p>This function returns the time elapsed since the last call to <a class="el" href="classsf_1_1Clock.html#a123e2627f2943e5ecaa1db0c7df3231b" title="Restart the clock. ">restart()</a> (or the construction of the instance if <a class="el" href="classsf_1_1Clock.html#a123e2627f2943e5ecaa1db0c7df3231b" title="Restart the clock. ">restart()</a> has not been called).</p>
+<p>This function returns the time elapsed since the last call to <a class="el" href="classsf_1_1Clock.html#a123e2627f2943e5ecaa1db0c7df3231b" title="Restart the clock_. ">restart()</a> (or the construction of the instance if <a class="el" href="classsf_1_1Clock.html#a123e2627f2943e5ecaa1db0c7df3231b" title="Restart the clock_. ">restart()</a> has not been called).</p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classsf_1_1Time.html" title="Represents a time value. ">Time</a> elapsed </dd></dl>
 
 </div>
@@ -132,8 +132,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Restart the clock. </p>
-<p>This function puts the time counter back to zero. It also returns the time elapsed since the clock was started.</p>
+<p>Restart the clock_. </p>
+<p>This function puts the time counter back to zero. It also returns the time elapsed since the clock_ was started.</p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classsf_1_1Time.html" title="Represents a time value. ">Time</a> elapsed </dd></dl>
 
 </div>

@@ -45,7 +45,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
-    /// The clock starts automatically after being constructed.
+    /// The clock_ starts automatically after being constructed.
     ///
     ////////////////////////////////////////////////////////////
     Clock();
@@ -63,10 +63,10 @@ public:
     Time getElapsedTime() const;
 
     ////////////////////////////////////////////////////////////
-    /// \brief Restart the clock
+    /// \brief Restart the clock_
     ///
     /// This function puts the time counter back to zero.
-    /// It also returns the time elapsed since the clock was started.
+    /// It also returns the time elapsed since the clock_ was started.
     ///
     /// \return Time elapsed
     ///
@@ -101,14 +101,14 @@ private:
 ///
 /// Usage example:
 /// \code
-/// sf::Clock clock;
+/// sf::Clock clock_;
 /// ...
-/// Time time1 = clock.getElapsedTime();
+/// Time time1 = clock_.getElapsedTime();
 /// ...
-/// Time time2 = clock.restart();
+/// Time time2 = clock_.restart();
 /// \endcode
 ///
-/// The sf::Time value returned by the clock can then be
+/// The sf::Time value returned by the clock_ can then be
 /// converted to a number of seconds, milliseconds or even
 /// microseconds.
 ///
