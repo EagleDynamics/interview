@@ -1,7 +1,6 @@
 #ifndef INTERVIEW_BALLCOLLISION_BALL_H_
 #define INTERVIEW_BALLCOLLISION_BALL_H_
 
-#include <cassert>
 #include <random>
 #include "SFML/Graphics.hpp"
 #include "constants.h"
@@ -35,7 +34,6 @@ class Ball {
   double get_radius() const;
   Vector2d get_center() const;
   double get_velocity() const;
-//  Vector2d get_dir() const { return direction_; }
   void set_rand_properties(std::mt19937 &gen);
   void set_properties(const Vector2d &center,
                       const Vector2d &direction,

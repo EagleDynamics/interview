@@ -1,5 +1,6 @@
 #include "ball.h"
 #include "vector_operations.h"
+#include <cassert>
 #include <cmath>
 
 void Ball::normalize_dir() {

@@ -40,7 +40,7 @@
 
 # Architecture
 
-Скоро здесь появится UML-диаграмма классов.
+![Alt text](UML/class_diagram.png?raw=true "Class diagram")
 
 # Build
 
