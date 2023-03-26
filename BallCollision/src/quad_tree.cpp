@@ -56,11 +56,11 @@ std::vector<uint32_t> base_quad_tree::query(const AABB &range) const {
 }
 
 // ---------HEAP QUAD TREE---------
-HeapQuadTree::HeapQuadTree(const AABB &boundary) {
+heap_quad_tree::heap_quad_tree(const AABB &boundary) {
   root_ = std::make_unique<Node>(boundary);
 }
 
-HeapQuadTree::HeapQuadTree(const std::vector<Ball> &balls, const AABB &boundary) :
+heap_quad_tree::heap_quad_tree(const std::vector<Ball> &balls, const AABB &boundary) :
     base_quad_tree(balls) {
   root_ = std::make_unique<Node>(boundary);
   uint32_t balls_count = balls.size();
@@ -69,7 +69,7 @@ HeapQuadTree::HeapQuadTree(const std::vector<Ball> &balls, const AABB &boundary)
   }
 }
 
-void HeapQuadTree::Node::subdivide() {
+void heap_quad_tree::Node::subdivide() {
   double quarter_length = boundary.half_of_length_ / 2;
   children[0] = std::make_unique<Node>(
       AABB{boundary.center_.x - quarter_length,
@@ -89,7 +89,7 @@ void HeapQuadTree::Node::subdivide() {
            quarter_length});
 }
 
-bool HeapQuadTree::Node::insert(base_quad_tree *qt_ptr, uint32_t idx) {
+bool heap_quad_tree::Node::insert(base_quad_tree *qt_ptr, uint32_t idx) {
   if (boundary.contains(qt_ptr->balls_[idx])) {
     if (children[0] == nullptr) {
       if (balls_id.size() < qt_ptr->MAX_AABB_BALLS_COUNT) {
@@ -108,9 +108,9 @@ bool HeapQuadTree::Node::insert(base_quad_tree *qt_ptr, uint32_t idx) {
   return false;
 }
 
-void HeapQuadTree::Node::query(const base_quad_tree *qt_ptr,
-                               const AABB &range,
-                               std::vector<uint32_t> &close_balls) const {
+void heap_quad_tree::Node::query(const base_quad_tree *qt_ptr,
+                                 const AABB &range,
+                                 std::vector<uint32_t> &close_balls) const {
   if (!boundary.intersects(range)) {
     return;
   }
@@ -126,7 +126,7 @@ void HeapQuadTree::Node::query(const base_quad_tree *qt_ptr,
   }
 }
 
-void HeapQuadTree::update(const std::vector<Ball> &balls) {
+void heap_quad_tree::update(const std::vector<Ball> &balls) {
   balls_ = balls;
   root_ = std::make_unique<Node>(root_->boundary);
   uint32_t balls_count = balls.size();
@@ -139,12 +139,12 @@ void HeapQuadTree::update(const std::vector<Ball> &balls) {
 // ---------STACK QUAD TREE---------
 // Use it when you have enough the stack size.
 // Fewer freezes expected.
-StackQuadTree::StackQuadTree(const AABB &boundary) {
+stack_quad_tree::stack_quad_tree(const AABB &boundary) {
   root_ = std::make_unique<Node>(boundary);
   nodes_.emplace_back(boundary);
 }
 
-StackQuadTree::StackQuadTree(const std::vector<Ball> &balls, const AABB &boundary) :
+stack_quad_tree::stack_quad_tree(const std::vector<Ball> &balls, const AABB &boundary) :
     base_quad_tree(balls) {
   root_ = std::make_unique<Node>(boundary);
   nodes_.emplace_back(boundary);
@@ -154,7 +154,7 @@ StackQuadTree::StackQuadTree(const std::vector<Ball> &balls, const AABB &boundar
   }
 }
 
-void StackQuadTree::Node::subdivide(StackQuadTree *qt_ptr) {
+void stack_quad_tree::Node::subdivide(stack_quad_tree *qt_ptr) {
   double quarter_length = boundary.half_of_length_ / 2;
   uint32_t n = qt_ptr->nodes_.size();
   qt_ptr->nodes_.push_back(AABB{boundary.center_.x - quarter_length,
@@ -175,7 +175,7 @@ void StackQuadTree::Node::subdivide(StackQuadTree *qt_ptr) {
   children[3] = n + 3;
 }
 
-bool StackQuadTree::Node::insert(base_quad_tree *qt_ptr, uint32_t idx) {
+bool stack_quad_tree::Node::insert(base_quad_tree *qt_ptr, uint32_t idx) {
 
   if (boundary.contains(qt_ptr->balls_[idx])) {
     if (children[0] == 0) {
@@ -183,19 +183,19 @@ bool StackQuadTree::Node::insert(base_quad_tree *qt_ptr, uint32_t idx) {
         balls_id.push_back(idx);
         return true;
       }
-      subdivide(dynamic_cast<StackQuadTree *>(qt_ptr));
+      subdivide(dynamic_cast<stack_quad_tree *>(qt_ptr));
     }
     bool is_inserted = false;
     for (uint32_t i = 0; i < 4; ++i) {
-      is_inserted |= dynamic_cast<StackQuadTree *>(qt_ptr)->nodes_[children[i]].insert(qt_ptr, idx);
+      is_inserted |= dynamic_cast<stack_quad_tree *>(qt_ptr)->nodes_[children[i]].insert(qt_ptr, idx);
     }
     return is_inserted;
   }
 }
 
-void StackQuadTree::Node::query(const base_quad_tree *qt_ptr,
-                                const AABB &range,
-                                std::vector<uint32_t> &close_balls) const {
+void stack_quad_tree::Node::query(const base_quad_tree *qt_ptr,
+                                  const AABB &range,
+                                  std::vector<uint32_t> &close_balls) const {
   if (!boundary.intersects(range)) {
     return;
   }
@@ -206,12 +206,12 @@ void StackQuadTree::Node::query(const base_quad_tree *qt_ptr,
   }
   if (children[0] != 0) {
     for (uint32_t i = 0; i < 4; ++i) {
-      dynamic_cast<const StackQuadTree *>(qt_ptr)->nodes_[children[i]].query(qt_ptr, range, close_balls);
+      dynamic_cast<const stack_quad_tree *>(qt_ptr)->nodes_[children[i]].query(qt_ptr, range, close_balls);
     }
   }
 }
 
-void StackQuadTree::update(const std::vector<Ball> &balls) {
+void stack_quad_tree::update(const std::vector<Ball> &balls) {
   // TODO: We can optimize it using additional field to maintain
   // index of last used node. Hence, we won't have to clear vector
   // each iteration.

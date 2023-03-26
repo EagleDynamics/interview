@@ -1,4 +1,4 @@
-#include "Ball.h"
+#include "ball.h"
 #include "vector_operations.h"
 #include <cmath>
 
@@ -7,6 +7,10 @@ void Ball::normalize_dir() {
   assert(dir_length != 0);
   direction_ /= dir_length;
 }
+
+double Ball::get_radius() const { return radius_; }
+Vector2d Ball::get_center() const { return center_; }
+double Ball::get_velocity() const { return velocity_; }
 
 void Ball::set_rand_dir(std::mt19937 &gen) {
   while (direction_ == Vector2d{0, 0}) {
@@ -21,7 +25,7 @@ void Ball::set_rand_radius(std::mt19937 &gen) {
   radius_ = MIN_BALL_R + (double) (gen() % (int) (MAX_BALL_R - MIN_BALL_R));
 }
 
-void Ball::set_rand_speed(std::mt19937 &gen) {
+void Ball::set_rand_velocity(std::mt19937 &gen) {
   // TODO: update
   velocity_ = MIN_BALL_SPEED + (double) (gen() % (int) (MAX_BALL_SPEED));
 //    velocity_ = 0;
@@ -39,12 +43,12 @@ void Ball::set_rand_properties(std::mt19937 &gen) {
   // not null direction vector we need to normalize it.
   set_rand_dir(gen);
   set_rand_radius(gen);
-  set_rand_speed(gen);
+  set_rand_velocity(gen);
   set_rand_place(gen);
 }
 
-void Ball::set_properties(Vector2d center,
-                          Vector2d direction,
+void Ball::set_properties(const Vector2d &center,
+                          const Vector2d &direction,
                           double radius,
                           double velocity,
                           bool is_collided) {
@@ -73,20 +77,41 @@ void Ball::draw(sf::RenderWindow &window) const {
   window.draw(gball);
 }
 
+void Ball::move(double deltaTime) {
+  center_.x += direction_.x * velocity_ * deltaTime;
+  center_.y += direction_.y * velocity_ * deltaTime;
+  if (center_.x + radius_ >= WINDOW_X) {
+    center_.x = WINDOW_X - radius_;
+    direction_.x *= -1;
+  }
+  if (center_.x - radius_ <= 0) {
+    center_.x = radius_;
+    direction_.x *= -1;
+  }
+  if (center_.y + radius_ >= WINDOW_Y) {
+    center_.y = WINDOW_Y - radius_;
+    direction_.y *= -1;
+  }
+  if (center_.y - radius_ <= 0) {
+    center_.y = radius_;
+    direction_.y *= -1;
+  }
+}
+
 bool Ball::intersects(const Ball &other) const {
   auto delta = center_ - other.center_;
   return get_length(delta) <= radius_ + other.radius_;
 }
 
-bool Ball::operator==(const Ball &other) const {
-  return center_ == other.center_ &&
-      direction_ == other.direction_ &&
-      radius_ == other.radius_ &&
-      velocity_ == other.velocity_;
+bool operator==(const Ball &ball_1, const Ball &ball_2) {
+  return ball_1.center_ == ball_2.center_ &&
+      ball_1.direction_ == ball_2.direction_ &&
+      ball_1.radius_ == ball_2.radius_ &&
+      ball_1.velocity_ == ball_2.velocity_;
 }
 
-bool Ball::operator!=(const Ball &other) const {
-  return !operator==(other);
+bool operator!=(const Ball &ball_1, const Ball &ball_2) {
+  return !(ball_1 == ball_2);
 }
 
 double Ball::get_tetta() const {

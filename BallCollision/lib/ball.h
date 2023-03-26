@@ -22,7 +22,7 @@ class Ball {
   void normalize_dir();
   void set_rand_dir(std::mt19937 &gen);
   void set_rand_radius(std::mt19937 &gen);
-  void set_rand_speed(std::mt19937 &gen);
+  void set_rand_velocity(std::mt19937 &gen);
   void set_rand_place(std::mt19937 &gen);
 
   double get_tetta() const;
@@ -32,49 +32,33 @@ class Ball {
                        double phi);
 
  public:
-  double get_radius() const { return radius_; }
-  Vector2d get_center() const { return center_; }
-  double get_velocity() const { return velocity_; }
+  double get_radius() const;
+  Vector2d get_center() const;
+  double get_velocity() const;
 //  Vector2d get_dir() const { return direction_; }
   void set_rand_properties(std::mt19937 &gen);
-  void set_properties(Vector2d center,
-                      Vector2d direction,
+  void set_properties(const Vector2d &center,
+                      const Vector2d &direction,
                       double radius,
                       double velocity,
                       bool is_collided);
-  void set_center(const Vector2d& center);
+  void set_center(const Vector2d &center);
   void set_collided(bool state);
   void draw(sf::RenderWindow &window) const;
 
-  void move(double deltaTime) {
-    center_.x += direction_.x * velocity_ * deltaTime;
-    center_.y += direction_.y * velocity_ * deltaTime;
-    if (center_.x + radius_ >= WINDOW_X) {
-      center_.x = WINDOW_X - radius_;
-      direction_.x *= -1;
-    }
-    if (center_.x - radius_ <= 0) {
-      center_.x = radius_;
-      direction_.x *= -1;
-    }
-    if (center_.y + radius_ >= WINDOW_Y) {
-      center_.y = WINDOW_Y - radius_;
-      direction_.y *= -1;
-    }
-    if (center_.y - radius_ <= 0) {
-      center_.y = radius_;
-      direction_.y *= -1;
-    }
-  }
+  void move(double deltaTime);
 
   bool intersects(const Ball &other) const;
 
  public:
-  bool operator==(const Ball &other) const;
-  bool operator!=(const Ball &other) const;
+  friend bool operator==(const Ball &ball_1, const Ball &ball_2);
+  friend bool operator!=(const Ball &ball_1, const Ball &ball_2);
 
   friend void collide(Ball &ball_1, Ball &ball_2);
 };
+
+bool operator==(const Ball &ball_1, const Ball &ball_2);
+bool operator!=(const Ball &ball_1, const Ball &ball_2);
 
 void collide(Ball &ball_1, Ball &ball_2);
 
