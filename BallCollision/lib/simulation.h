@@ -17,7 +17,7 @@ class Simulation {
 
  protected:
   void init_simulation();
-  void recalculate(double );
+  void recalculate(double delta_time);
 
  public:
   Simulation() = default;
