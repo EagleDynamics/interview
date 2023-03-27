@@ -40,6 +40,8 @@
 
 # Architecture
 
+В скором времени UML обновится в соответствии с новой архитектурой (добавлен класс "Shape" и шаблонизирована структура QuadTree)
+
 ![Alt text](UML/class_diagram.png?raw=true "Class diagram")
 
 # Build
