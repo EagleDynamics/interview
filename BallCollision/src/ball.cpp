@@ -1,39 +1,15 @@
 #include "ball.h"
 #include "vector_operations.h"
-#include <cassert>
 #include <cmath>
-
-void Ball::normalize_dir() {
-  double dir_length = get_length(direction_);
-  assert(dir_length != 0);
-  direction_ /= dir_length;
-}
 
 double Ball::get_radius() const { return radius_; }
 Vector2d Ball::get_center() const { return center_; }
-double Ball::get_velocity() const { return velocity_; }
-bool Ball::is_collided() const { return is_collided_; }
-
-void Ball::set_rand_dir(std::mt19937 &gen) {
-  while (direction_ == Vector2d{0, 0}) {
-    direction_ = {-DIR_SCALE + (double) (gen() % (2 * DIR_SCALE)),
-                  -DIR_SCALE + (double) (gen() % (2 * DIR_SCALE))};
-  }
-  // vector normalization
-  normalize_dir();
-}
 
 void Ball::set_rand_radius(std::mt19937 &gen) {
   radius_ = MIN_BALL_R + (double) (gen() % (int) (MAX_BALL_R - MIN_BALL_R));
 }
 
-void Ball::set_rand_velocity(std::mt19937 &gen) {
-  // TODO: update
-  velocity_ = MIN_BALL_SPEED + (double) (gen() % (int) (MAX_BALL_SPEED));
-//    velocity_ = 0;
-}
-
-void Ball::set_rand_place(std::mt19937 &gen) {
+void Ball::set_rand_center(std::mt19937 &gen) {
   center_ = {radius_ + (double) (gen() % (int) (WINDOW_X - 2 * radius_)),
              radius_ + (double) (gen() % (int) (WINDOW_Y - 2 * radius_))};
 }
@@ -43,10 +19,9 @@ void Ball::set_rand_properties(std::mt19937 &gen) {
   // suggested move-method. Also this vector can't be a
   // null vector if Ball has non-zero velocity_. So after we get
   // not null direction vector we need to normalize it.
-  set_rand_dir(gen);
+  Shape::set_rand_properties(gen);
   set_rand_radius(gen);
-  set_rand_velocity(gen);
-  set_rand_place(gen);
+  set_rand_center(gen);
 }
 
 void Ball::set_properties(const Vector2d &center,
@@ -54,11 +29,9 @@ void Ball::set_properties(const Vector2d &center,
                           double radius,
                           double velocity,
                           bool is_collided) {
+  Shape::set_properties(direction, velocity, is_collided);
   center_ = center;
-  direction_ = direction;
   radius_ = radius;
-  velocity_ = velocity;
-  is_collided_ = is_collided;
 }
 
 void Ball::set_center(const Vector2d &center) {
@@ -88,6 +61,10 @@ void Ball::move(double deltaTime) {
     center_.y = radius_;
     direction_.y *= -1;
   }
+}
+
+bool Ball::intersects(const Shape &other) const {
+  // not implemented
 }
 
 bool Ball::intersects(const Ball &other) const {
@@ -139,7 +116,7 @@ void Ball::update_velocity(double v_1, double v_2,
   }
 }
 
-void collide(Ball &ball_1, Ball &ball_2) {
+void handle_collision(Ball &ball_1, Ball &ball_2) {
   double m_1 = ball_1.radius_ * ball_1.radius_,
       m_2 = ball_2.radius_ * ball_2.radius_;
   double v_1 = ball_1.velocity_,

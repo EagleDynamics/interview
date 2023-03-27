@@ -5,6 +5,7 @@ set(source_files
         src/quad_tree.cpp
         src/vector_operations.cpp
         src/simulation.cpp
+        src/shape.cpp
         )
 
 add_executable(main main.cpp ${source_files})

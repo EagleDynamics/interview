@@ -41,7 +41,7 @@ void Simulation::recalculate() {
         if (ball.intersects(other)) {
           ball.set_collided(true);
           other.set_collided(true);
-          collide(ball, other);
+          handle_collision(ball, other);
         }
       }
     }

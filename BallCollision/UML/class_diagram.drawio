@@ -39,7 +39,7 @@
         <mxCell id="b9e9yPSJ1jXsbHPMa5kg-64" value="- set_rand_velocity(std::mt19937 &amp;amp;): void&amp;nbsp;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="9urxqjlxQr2E_BWtx98O-6" vertex="1">
           <mxGeometry y="242" width="440" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="b9e9yPSJ1jXsbHPMa5kg-63" value="- set_rand_place(std::mt19937 &amp;amp;): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="9urxqjlxQr2E_BWtx98O-6" vertex="1">
+        <mxCell id="b9e9yPSJ1jXsbHPMa5kg-63" value="- set_rand_center(std::mt19937 &amp;amp;): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="9urxqjlxQr2E_BWtx98O-6" vertex="1">
           <mxGeometry y="268" width="440" height="26" as="geometry" />
         </mxCell>
         <mxCell id="b9e9yPSJ1jXsbHPMa5kg-62" value="- get_tetta(): double" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="9urxqjlxQr2E_BWtx98O-6" vertex="1">
