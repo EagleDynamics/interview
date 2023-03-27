@@ -40,6 +40,8 @@
 
 # Architecture
 
+При разработке приложения следовал принципа SOLID. Итого, в текущей версии проекта мы можем добавить класс новой фигуры (например, прямоугольника) и работать уже с ней. Класс симуляции и структуры QuadTree шаблонизированы, класс фигур расширяем.
+
 [Диаграмма классов для симуляции](UML/simulation.drawio.png?raw=true "Simulation class diagram")
 
 [Диаграмма классов для структуры QuadTree](UML/quad_tree.drawio.png?raw=true "quad_tree class diagram")
