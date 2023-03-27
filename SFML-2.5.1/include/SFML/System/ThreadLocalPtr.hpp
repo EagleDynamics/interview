@@ -74,7 +74,7 @@ public:
 
     ////////////////////////////////////////////////////////////
     /// \brief Conversion operator to implicitly convert the
-    ///        pointer to its raw pointer type (T*)
+    ///        pointer to its raw pointer type (Ball*)
     ///
     /// \return Pointer to the actual object
     ///

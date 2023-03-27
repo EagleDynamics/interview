@@ -82,9 +82,9 @@ public:
     /// \brief Construct the rectangle from another type of rectangle
     ///
     /// This constructor doesn't replace the copy constructor,
-    /// it's called only when U != T.
+    /// it's called only when U != Ball.
     /// A call to this constructor will fail to compile if U
-    /// is not convertible to T.
+    /// is not convertible to Ball.
     ///
     /// \param rectangle Rectangle to convert
     ///

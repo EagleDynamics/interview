@@ -60,9 +60,9 @@ public:
     /// \brief Construct the vector from another type of vector
     ///
     /// This constructor doesn't replace the copy constructor,
-    /// it's called only when U != T.
+    /// it's called only when U != Ball.
     /// A call to this constructor will fail to compile if U
-    /// is not convertible to T.
+    /// is not convertible to Ball.
     ///
     /// \param vector Vector to convert
     ///
@@ -270,11 +270,11 @@ typedef Vector3<float> Vector3f;
 /// represent anything that has three dimensions: a size, a point,
 /// a velocity, etc.
 ///
-/// The template parameter T is the type of the coordinates. It
+/// The template parameter Ball is the type of the coordinates. It
 /// can be any type that supports arithmetic operations (+, -, /, *)
 /// and comparisons (==, !=), for example int or float.
 ///
-/// You generally don't have to care about the templated form (sf::Vector3<T>),
+/// You generally don't have to care about the templated form (sf::Vector3<Ball>),
 /// the most common specializations have special typedefs:
 /// \li sf::Vector3<float> is sf::Vector3f
 /// \li sf::Vector3<int> is sf::Vector3i

@@ -34,7 +34,7 @@ void Simulation::recalculate() {
   size_t balls_count = balls_.size();
   for (uint32_t i = 0; i < balls_count; ++i) {
     Ball &ball = balls_[i];
-    auto close_balls_id = quad_tree_.get_close_balls(ball);
+    auto close_balls_id = quad_tree_.get_close_figures(ball);
     for (uint32_t id : close_balls_id) {
       if (id > i) {
         Ball &other = balls_[id];

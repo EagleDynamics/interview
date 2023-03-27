@@ -12,7 +12,7 @@
 class Simulation {
  protected:
   std::vector<Ball> balls_;
-  heap_quad_tree quad_tree_;
+  heap_quad_tree<Ball> quad_tree_;
   sf::Clock clock_;
   double last_time_{0};
   Math::middle_average_filter<double, 100> fpscounter_;

@@ -204,8 +204,8 @@ namespace Glsl
 /// their equivalents in GLSL, the OpenGL shading language.
 /// These types are exclusively used by the sf::Shader class.
 ///
-/// Types that already exist in SFML, such as \ref sf::Vector2<T>
-/// and \ref sf::Vector3<T>, are reused as typedefs, so you can use
+/// Types that already exist in SFML, such as \ref sf::Vector2<Ball>
+/// and \ref sf::Vector3<Ball>, are reused as typedefs, so you can use
 /// the types in this namespace as well as the original ones.
 /// Others are newly defined, such as Glsl::Vec4 or Glsl::Mat3. Their
 /// actual type is an implementation detail and should not be used.
