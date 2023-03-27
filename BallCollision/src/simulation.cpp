@@ -17,17 +17,10 @@ void Simulation<T>::init_simulation() {
     } while (quad_tree_.is_collided(figures_[i]));
     quad_tree_.insert(figures_[i]);
   }
-
-  last_time_ = clock_.restart().asSeconds();
 }
 
 template<typename T>
-void Simulation<T>::recalculate() {
-  double current_time = clock_.getElapsedTime().asSeconds();
-  double deltaTime = current_time - last_time_;
-  fpscounter_.push(1.0f / (current_time - last_time_));
-  last_time_ = current_time;
-
+void Simulation<T>::recalculate(double delta_time) {
   for (auto &figure : figures_) {
     figure.set_collided(false);
   }
@@ -51,7 +44,7 @@ void Simulation<T>::recalculate() {
   }
 
   for (auto &figure : figures_) {
-    figure.move(deltaTime);
+    figure.move(delta_time);
   }
 }
 
@@ -100,13 +93,22 @@ void SimulationUI<T>::handle_event() {
 }
 
 template<typename T>
+double SimulationUI<T>::get_delta_time() {
+  double current_time = clock_.getElapsedTime().asSeconds();
+  double delta_time = current_time - last_time_;
+  fpscounter_.push(1.0f / (current_time - last_time_));
+  last_time_ = current_time;
+  return delta_time;
+}
+
+template<typename T>
 void SimulationUI<T>::start() {
   init_window();
   this->init_simulation();
-
+  last_time_ = clock_.restart().asSeconds();
   while (window.isOpen()) {
     handle_event();
-    this->recalculate();
+    this->recalculate(get_delta_time());
     window.clear();
     redraw();
     draw_fps();
@@ -114,5 +116,7 @@ void SimulationUI<T>::start() {
   }
 }
 
-template class Simulation<Ball>;
-template class SimulationUI<Ball>;
+template
+class Simulation<Ball>;
+template
+class SimulationUI<Ball>;

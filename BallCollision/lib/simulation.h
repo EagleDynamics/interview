@@ -14,13 +14,10 @@ class Simulation {
  protected:
   std::vector<T> figures_;
   heap_quad_tree<T> quad_tree_;
-  sf::Clock clock_;
-  double last_time_{0};
-  Math::middle_average_filter<double, 100> fpscounter_;
 
  protected:
   void init_simulation();
-  void recalculate();
+  void recalculate(double );
 
  public:
   Simulation() = default;
@@ -33,12 +30,16 @@ class SimulationUI : protected Simulation<T> {
  private:
   sf::RenderWindow
       window{sf::VideoMode(WINDOW_X, WINDOW_Y), "Figure collision demo"};
+  sf::Clock clock_;
+  double last_time_{0};
+  Math::middle_average_filter<double, 100> fpscounter_;
 
  private:
   void init_window();
   void redraw();
   void draw_fps();
   void handle_event();
+  double get_delta_time();
 
  public:
   SimulationUI() = default;
