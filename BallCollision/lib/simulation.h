@@ -4,15 +4,16 @@
 #include <vector>
 #include <chrono>
 #include <random>
-#include "ball.h"
+#include "constants.h"
 #include "quad_tree.h"
 #include "SFML/Graphics.hpp"
 #include "middle_average_filter.h"
 
+template<typename T>
 class Simulation {
  protected:
-  std::vector<Ball> balls_;
-  heap_quad_tree<Ball> quad_tree_;
+  std::vector<T> figures_;
+  heap_quad_tree<T> quad_tree_;
   sf::Clock clock_;
   double last_time_{0};
   Math::middle_average_filter<double, 100> fpscounter_;
@@ -27,9 +28,11 @@ class Simulation {
   virtual ~Simulation() = 0;
 };
 
-class SimulationUI: protected Simulation {
+template<typename T>
+class SimulationUI : protected Simulation<T> {
  private:
-  sf::RenderWindow window{sf::VideoMode(WINDOW_X, WINDOW_Y), "Ball collision demo"};
+  sf::RenderWindow
+      window{sf::VideoMode(WINDOW_X, WINDOW_Y), "Figure collision demo"};
 
  private:
   void init_window();

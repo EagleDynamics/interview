@@ -1,7 +1,8 @@
 #include "simulation.h"
+#include "ball.h"
 
 int main() {
-  SimulationUI simUI;
+  SimulationUI<Ball> simUI;
   simUI.start();
 
   return 0;

@@ -126,7 +126,7 @@ template<typename T>
 bool heap_quad_tree<T>::Node::insert(base_quad_tree<T> *qt_ptr, uint32_t idx) {
   if (this->boundary.contains(qt_ptr->figures_[idx])) {
     if (children[0] == nullptr) {
-      if (this->figures_id.size() < qt_ptr->MAX_AABB_figures_COUNT) {
+      if (this->figures_id.size() < qt_ptr->MAX_AABB_FIGURES_COUNT) {
         this->figures_id.push_back(idx);
         return true;
       }

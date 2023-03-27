@@ -38,5 +38,5 @@ void Shape::set_rand_dir(std::mt19937 &gen) {
 }
 
 void Shape::set_rand_velocity(std::mt19937 &gen) {
-  velocity_ = MIN_BALL_SPEED + (double) (gen() % (int) (MAX_BALL_SPEED));
+  velocity_ = MIN_FIGURE_SPEED + (double) (gen() % (int) (MAX_FIGURE_SPEED));
 }

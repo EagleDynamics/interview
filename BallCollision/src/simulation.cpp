@@ -1,87 +1,96 @@
 #include "simulation.h"
+#include "ball.h"
 
-void Simulation::init_simulation() {
+template<typename T>
+void Simulation<T>::init_simulation() {
   std::mt19937 gen(std::chrono::steady_clock::now().time_since_epoch().count());
 
   // rand() returns new number every time we invoke it.
   // So we had to take this function-call out of the for-loop condition
-  size_t balls_count = gen() % (MAX_BALLS - MIN_BALLS) + MIN_BALLS;
-  balls_.resize(balls_count);
+  size_t figures_count = gen() % (MAX_FIGURES - MIN_FIGURES) + MIN_FIGURES;
+  figures_.resize(figures_count);
 
-  // randomly initialize balls
-  for (size_t i = 0; i < balls_count; ++i) {
+  // randomly initialize figures
+  for (size_t i = 0; i < figures_count; ++i) {
     do {
-      balls_[i].set_rand_properties(gen);
-    } while (quad_tree_.is_collided(balls_[i]));
-    quad_tree_.insert(balls_[i]);
+      figures_[i].set_rand_properties(gen);
+    } while (quad_tree_.is_collided(figures_[i]));
+    quad_tree_.insert(figures_[i]);
   }
 
   last_time_ = clock_.restart().asSeconds();
 }
 
-void Simulation::recalculate() {
+template<typename T>
+void Simulation<T>::recalculate() {
   double current_time = clock_.getElapsedTime().asSeconds();
   double deltaTime = current_time - last_time_;
   fpscounter_.push(1.0f / (current_time - last_time_));
   last_time_ = current_time;
 
-  for (auto &ball : balls_) {
-    ball.set_collided(false);
+  for (auto &figure : figures_) {
+    figure.set_collided(false);
   }
 
-  quad_tree_.update(balls_);
+  quad_tree_.update(figures_);
 
-  size_t balls_count = balls_.size();
-  for (uint32_t i = 0; i < balls_count; ++i) {
-    Ball &ball = balls_[i];
-    auto close_balls_id = quad_tree_.get_close_figures(ball);
-    for (uint32_t id : close_balls_id) {
+  size_t figures_count = figures_.size();
+  for (uint32_t i = 0; i < figures_count; ++i) {
+    T &figure = figures_[i];
+    auto close_figures_id = quad_tree_.get_close_figures(figure);
+    for (uint32_t id : close_figures_id) {
       if (id > i) {
-        Ball &other = balls_[id];
-        if (ball.intersects(other)) {
-          ball.set_collided(true);
+        T &other = figures_[id];
+        if (figure.intersects(other)) {
+          figure.set_collided(true);
           other.set_collided(true);
-          handle_collision(ball, other);
+          handle_collision(figure, other);
         }
       }
     }
   }
 
-  for (auto &ball : balls_) {
-    ball.move(deltaTime);
+  for (auto &figure : figures_) {
+    figure.move(deltaTime);
   }
 }
 
-Simulation::~Simulation() {}
+template<typename T>
+Simulation<T>::~Simulation() {}
 
-void SimulationUI::init_window() {
+template<typename T>
+void SimulationUI<T>::init_window() {
   window.setFramerateLimit(120);
 }
 
-void SimulationUI::redraw() {
-  // We need to specify &. Otherwise we'll create Ball's
-  // copy while we iterate through balls vector.
-  for (const auto &ball : balls_) {
-    sf::CircleShape gball;
-    auto radius = ball.get_radius();
-    gball.setRadius(radius);
-    gball.setPosition(sf::Vector2f(ball.get_center() - Vector2d{radius, radius}));
-    if (ball.is_collided()) {
-      gball.setFillColor(sf::Color(150, 50, 250));
+template<typename T>
+void SimulationUI<T>::redraw() {
+  // We need to specify &. Otherwise we'll create figure's
+  // copy while we iterate through figures vector.
+  for (const auto &figure : this->figures_) {
+    sf::CircleShape gfigure;
+    auto radius = figure.get_radius();
+    gfigure.setRadius(radius);
+    gfigure.setPosition(sf::Vector2f(
+        figure.get_center() - Vector2d{radius, radius}));
+    if (figure.is_collided()) {
+      gfigure.setFillColor(sf::Color(150, 50, 250));
     }
-    window.draw(gball);
+    window.draw(gfigure);
   }
 }
 
-void SimulationUI::draw_fps() {
+template<typename T>
+void SimulationUI<T>::draw_fps() {
   char c[32];
-  snprintf(c, 32, "FPS: %f", fpscounter_.getAverage());
+  snprintf(c, 32, "FPS: %f", this->fpscounter_.getAverage());
   std::string string(c);
   sf::String str(c);
   window.setTitle(str);
 }
 
-void SimulationUI::handle_event() {
+template<typename T>
+void SimulationUI<T>::handle_event() {
   sf::Event event;
   while (window.pollEvent(event)) {
     if (event.type == sf::Event::Closed) {
@@ -90,16 +99,20 @@ void SimulationUI::handle_event() {
   }
 }
 
-void SimulationUI::start() {
+template<typename T>
+void SimulationUI<T>::start() {
   init_window();
-  init_simulation();
+  this->init_simulation();
 
   while (window.isOpen()) {
     handle_event();
-    recalculate();
+    this->recalculate();
     window.clear();
     redraw();
     draw_fps();
     window.display();
   }
 }
+
+template class Simulation<Ball>;
+template class SimulationUI<Ball>;
