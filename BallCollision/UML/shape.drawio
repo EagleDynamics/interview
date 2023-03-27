@@ -1,0 +1,132 @@
+<mxfile host="app.diagrams.net" modified="2023-03-27T15:10:01.586Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="r2ns8RtWPfUElyPOEpDT" version="21.1.1" type="device">
+  <diagram name="Page-1" id="ESZmFiBb_NONyupSWtqH">
+    <mxGraphModel dx="1393" dy="2398" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="IYSgo16Of13armDdbYft-39" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="1030" y="-510" width="440" height="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-1" value="&lt;i&gt;Shape&lt;/i&gt;" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-39">
+          <mxGeometry width="436" height="476" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-2" value="# direction_: Vector2d" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="26" width="436" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-3" value="# is_collided_: bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="52" width="436" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-4" value="# velocity_: double" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="78" width="436" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-5" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="104" width="436" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-6" value="# normalize_dir(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="112" width="436" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-7" value="# set_rand_velocity(std::mt19937 &amp;amp;): void&amp;nbsp;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="138" width="436" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-8" value="# set_rand_dir(std::mt19937 &amp;amp;): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="164" width="436" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-9" value="+ set_rand_properties(std::mt19937 &amp;amp;): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="190" width="436" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-10" value="+ set_properties(const Vector2d &amp;amp;, const Vector2d &amp;amp;, double, double, bool): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="216" width="436" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-11" value="+ get_velocity(): double" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="242" width="436" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-12" value="+ is_collided(): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="268" width="436" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-13" value="+ set_collided(bool): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="294" width="436" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-14" value="+ &lt;i&gt;get_leftmost(): Vector2d&lt;/i&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="320" width="436" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-15" value="+ &lt;i&gt;get_rightmost(): Vector2d&lt;/i&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="346" width="436" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-16" value="+ &lt;i&gt;get_topmost(): Vector2d&lt;/i&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="372" width="436" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-17" value="+ &lt;i&gt;get_rightmost(): Vector2d&lt;/i&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="398" width="436" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-18" value="+ &lt;i&gt;move(double): void&lt;/i&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="424" width="436" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-19" value="+ &lt;i&gt;intersects(const Shape &amp;amp;): bool&lt;/i&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-1">
+          <mxGeometry y="450" width="436" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-20" value="" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.504;entryY=1.008;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="IYSgo16Of13armDdbYft-39" source="IYSgo16Of13armDdbYft-21" target="IYSgo16Of13armDdbYft-19">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="218.5" y="588" as="sourcePoint" />
+            <mxPoint x="217.5" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-21" value="Ball" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-39">
+          <mxGeometry y="590" width="440" height="450" as="geometry">
+            <mxRectangle x="140" y="180" width="60" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-22" value="- center_: Vector2d" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-21">
+          <mxGeometry y="26" width="440" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-23" value="- radius_: double" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-21">
+          <mxGeometry y="52" width="440" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-24" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="IYSgo16Of13armDdbYft-21">
+          <mxGeometry y="78" width="440" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-25" value="- set_rand_radius(std::mt19937 &amp;amp;): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-21">
+          <mxGeometry y="86" width="440" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-26" value="- set_rand_center(std::mt19937 &amp;amp;): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-21">
+          <mxGeometry y="112" width="440" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-27" value="- get_tetta(): double" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-21">
+          <mxGeometry y="138" width="440" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-28" value="- update_velocity(double, double, double, double, double, double, double): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-21">
+          <mxGeometry y="164" width="440" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-29" value="+ get_radius(): double" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-21">
+          <mxGeometry y="190" width="440" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-30" value="+ get_center(): Vector2d" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-21">
+          <mxGeometry y="216" width="440" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-31" value="+ set_center(const Vector2d &amp;amp;): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-21">
+          <mxGeometry y="242" width="440" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-32" value="+ get_leftmost(): Vector2d" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-21">
+          <mxGeometry y="268" width="440" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-33" value="+ get_rightmost(): Vector2d" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-21">
+          <mxGeometry y="294" width="440" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-34" value="+ get_topmost(): Vector2d" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-21">
+          <mxGeometry y="320" width="440" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-35" value="+ get_rightmost(): Vector2d" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-21">
+          <mxGeometry y="346" width="440" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-36" value="+ move(double): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-21">
+          <mxGeometry y="372" width="440" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-37" value="+ intersects(const Shape &amp;amp;): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-21">
+          <mxGeometry y="398" width="440" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="IYSgo16Of13armDdbYft-38" value="+ intersects(const Ball &amp;amp;): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="IYSgo16Of13armDdbYft-21">
+          <mxGeometry y="424" width="440" height="26" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

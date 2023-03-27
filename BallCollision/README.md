@@ -40,9 +40,12 @@
 
 # Architecture
 
-В скором времени UML обновится в соответствии с новой архитектурой (добавлен класс "Shape" и шаблонизирована структура QuadTree)
+[Диаграмма классов для симуляции](UML/simulation.drawio.png?raw=true "Simulation class diagram")
 
-![Alt text](UML/class_diagram.png?raw=true "Class diagram")
+[Диаграмма классов для структуры QuadTree](UML/quad_tree.drawio.png?raw=true "quad_tree class diagram")
+
+[Диаграмма классов для фигур](UML/shape.drawio.png?raw=true "Shape class diagram")
+
 
 # Build
 
