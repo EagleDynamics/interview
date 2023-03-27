@@ -5,6 +5,22 @@
 double Ball::get_radius() const { return radius_; }
 Vector2d Ball::get_center() const { return center_; }
 
+Vector2d Ball::get_leftmost() const {
+  return center_ - Vector2d{radius_, 0};
+}
+
+Vector2d Ball::get_rightmost() const {
+  return center_ + Vector2d{radius_, 0};
+}
+
+Vector2d Ball::get_topmost() const {
+  return center_ + Vector2d{0, radius_};
+}
+
+Vector2d Ball::get_bottommost() const {
+  return center_ - Vector2d{0, radius_};
+}
+
 void Ball::set_rand_radius(std::mt19937 &gen) {
   radius_ = MIN_BALL_R + (double) (gen() % (int) (MAX_BALL_R - MIN_BALL_R));
 }

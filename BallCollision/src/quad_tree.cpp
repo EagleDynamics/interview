@@ -9,14 +9,12 @@ base_quad_tree<T>::AABB::AABB(const sf::RenderWindow &window) {
   half_of_length_ = (double) std::max(size.x, size.y) / 2;
 }
 
-template<>
-bool base_quad_tree<Ball>::AABB::contains(const Ball &ball) const {
-  auto figure_center = ball.get_center();
-  double radius = ball.get_radius();
-  if ((figure_center.x + radius >= center_.x - half_of_length_) &&
-      (figure_center.x - radius <= center_.x + half_of_length_) &&
-      (figure_center.y + radius >= center_.y - half_of_length_) &&
-      (figure_center.y - radius <= center_.y + half_of_length_)) {
+template<typename T>
+bool base_quad_tree<T>::AABB::contains(const T &figure) const {
+  if ((figure.get_rightmost().x >= center_.x - half_of_length_) &&
+      (figure.get_leftmost().x <= center_.x + half_of_length_) &&
+      (figure.get_topmost().y >= center_.y - half_of_length_) &&
+      (figure.get_bottommost().y <= center_.y + half_of_length_)) {
     return true;
   } else {
     return false;
@@ -103,21 +101,25 @@ template<typename T>
 void heap_quad_tree<T>::Node::subdivide() {
   double quarter_length = this->boundary.half_of_length_ / 2;
   children[0] = std::make_unique<Node>(
-      typename heap_quad_tree<T>::AABB(this->boundary.center_.x - quarter_length,
-           this->boundary.center_.y - quarter_length,
-           quarter_length));
+      typename heap_quad_tree<T>::AABB(
+          this->boundary.center_.x - quarter_length,
+          this->boundary.center_.y - quarter_length,
+          quarter_length));
   children[1] = std::make_unique<Node>(
-      typename base_quad_tree<T>::AABB(this->boundary.center_.x + quarter_length,
-           this->boundary.center_.y - quarter_length,
-           quarter_length));
+      typename base_quad_tree<T>::AABB(
+          this->boundary.center_.x + quarter_length,
+          this->boundary.center_.y - quarter_length,
+          quarter_length));
   children[2] = std::make_unique<Node>(
-      typename base_quad_tree<T>::AABB(this->boundary.center_.x - quarter_length,
-           this->boundary.center_.y + quarter_length,
-           quarter_length));
+      typename base_quad_tree<T>::AABB(
+          this->boundary.center_.x - quarter_length,
+          this->boundary.center_.y + quarter_length,
+          quarter_length));
   children[3] = std::make_unique<Node>(
-      typename base_quad_tree<T>::AABB(this->boundary.center_.x + quarter_length,
-           this->boundary.center_.y + quarter_length,
-           quarter_length));
+      typename base_quad_tree<T>::AABB(
+          this->boundary.center_.x + quarter_length,
+          this->boundary.center_.y + quarter_length,
+          quarter_length));
 }
 
 template<typename T>
@@ -281,5 +283,7 @@ void stack_quad_tree<T>::update(const std::vector<T> &figures) {
   }
 }
 
-template class base_quad_tree<Ball>;
-template class heap_quad_tree<Ball>;
+template
+class base_quad_tree<Ball>;
+template
+class heap_quad_tree<Ball>;

@@ -21,6 +21,10 @@ class Ball : public Shape {
  public:
   Vector2d get_center() const;
   double get_radius() const;
+  Vector2d get_leftmost() const override;
+  Vector2d get_rightmost() const override;
+  Vector2d get_topmost() const override;
+  Vector2d get_bottommost() const override;
   void set_rand_properties(std::mt19937 &gen) override;
   void set_properties(const Vector2d &center,
                       const Vector2d &direction,

@@ -26,6 +26,12 @@ class Shape {
   double get_velocity() const;
   bool is_collided() const;
 
+  virtual Vector2d get_leftmost() const = 0;
+  virtual Vector2d get_rightmost() const = 0;
+  virtual Vector2d get_topmost() const = 0;
+  virtual Vector2d get_bottommost() const = 0;
+
+
  public:
   virtual void move(double deltaTime) = 0;
   virtual bool intersects(const Shape &other) const;
