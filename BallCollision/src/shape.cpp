@@ -5,6 +5,10 @@
 double Shape::get_velocity() const { return velocity_; }
 bool Shape::is_collided() const { return is_collided_; }
 
+void Shape::set_collided(bool state) {
+  is_collided_ = state;
+}
+
 void Shape::set_rand_properties(std::mt19937 &gen) {
   set_rand_dir(gen);
   set_rand_velocity(gen);
@@ -36,8 +40,3 @@ void Shape::set_rand_dir(std::mt19937 &gen) {
 void Shape::set_rand_velocity(std::mt19937 &gen) {
   velocity_ = MIN_BALL_SPEED + (double) (gen() % (int) (MAX_BALL_SPEED));
 }
-
-bool Shape::intersects(const Shape &other) const {
-  // not implemented
-}
-

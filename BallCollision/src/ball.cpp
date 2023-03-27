@@ -54,10 +54,6 @@ void Ball::set_center(const Vector2d &center) {
   center_ = center;
 }
 
-void Ball::set_collided(bool state) {
-  is_collided_ = state;
-}
-
 void Ball::move(double deltaTime) {
   center_.x += direction_.x * velocity_ * deltaTime;
   center_.y += direction_.y * velocity_ * deltaTime;

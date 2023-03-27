@@ -32,7 +32,6 @@ class Ball : public Shape {
                       double velocity,
                       bool is_collided);
   void set_center(const Vector2d &center);
-  void set_collided(bool state);
 
   void move(double deltaTime) override;
 

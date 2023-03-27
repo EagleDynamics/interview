@@ -57,7 +57,7 @@ class base_quad_tree {
  protected:
   std::unique_ptr<BaseNode> root_{nullptr};
   std::vector<T> figures_;
-  const uint32_t MAX_AABB_figures_COUNT = 3;
+  const uint32_t MAX_AABB_FIGURES_COUNT = 3;
 
   friend class heap_quad_tree<T>;
   friend class stack_quad_tree<T>;
